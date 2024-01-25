@@ -37,7 +37,7 @@ int CINTrys_laguerre(int n, double x, double lower, double *roots, double *weigh
 int CINTlrys_laguerre(int n, double x, double lower, double *roots, double *weights);
 int CINTrys_jacobi(int n, double x, double lower, double *roots, double *weights);
 int CINTlrys_jacobi(int n, double x, double lower, double *roots, double *weights);
-#ifdef HAVE_QUADMATH_H
+#ifdef HAVE_FLOAT128_QC
 int CINTqrys_schmidt(int nroots, double x, double lower, double *roots, double *weights);
 int CINTqrys_laguerre(int n, double x, double lower, double *roots, double *weights);
 int CINTqrys_jacobi(int n, double x, double lower, double *roots, double *weights);
@@ -55,7 +55,7 @@ void fmt_erfc_like(double *f, double t, double lower, int m);
 void fmt1_erfc_like(double *f, double t, double lower, int m);
 void fmt_lerfc_like(long double *f, long double t, long double lower, int m);
 void fmt1_lerfc_like(long double *f, long double t, long double lower, int m);
-#ifdef HAVE_QUADMATH_H
+#ifdef HAVE_FLOAT128_QC
 void qgamma_inc_like(__float128 *f, __float128 t, int m);
 void fmt_qerfc_like(__float128 *f, __float128 t, __float128 lower, int m);
 void fmt1_qerfc_like(__float128 *f, __float128 t, __float128 lower, int m);

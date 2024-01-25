@@ -16,6 +16,9 @@
 #define SQRTPIE4l     .8862269254527580136490837416705725913987747280611935641069038949264l
 #ifdef HAVE_QUADMATH_H
 #include <quadmath.h>
+#endif
+
+#ifdef HAVE_FLOAT128_QC
 #define SQRTPIE4q     .8862269254527580136490837416705725913987747280611935641069038949264q
 #endif
 // For double precision 0.063^20 < 2**-53
@@ -3714,7 +3717,7 @@ int CINTlrys_jacobi(int n, double x, double lower, double *roots, double *weight
         return lrys_wheeler_partial(n, alpha, beta, moments, roots, weights);
 }
 
-#ifdef HAVE_QUADMATH_H
+#ifdef HAVE_FLOAT128_QC
 // (2*n*(n+.5)-.25) / ((2*n+1.5)*(2*n-.5))
 static __float128 qJACOBI_ALPHA[] = {
 0.333333333333333333333333333333333333q,
@@ -6344,4 +6347,4 @@ int CINTqrys_jacobi(int n, double x, double lower, double *roots, double *weight
         }
         return qrys_wheeler_partial(n, alpha, beta, moments, roots, weights);
 }
-#endif  // HAVE_QUADMATH_H
+#endif  // HAVE_FLOAT128_QC

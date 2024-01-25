@@ -48,7 +48,7 @@ static int rys_root3(double x, double *roots, double *weights);
 static int rys_root4(double x, double *roots, double *weights);
 static int rys_root5(double x, double *roots, double *weights);
 typedef int QuadratureFunction(int n, double x, double lower, double *roots, double *weights);
-#ifndef HAVE_QUADMATH_H
+#ifndef HAVE_FLOAT128_QC
 #define CINTqrys_schmidt        CINTlrys_schmidt
 #define CINTqrys_laguerre       CINTlrys_laguerre
 #define CINTqrys_jacobi         CINTlrys_jacobi
@@ -2112,7 +2112,7 @@ int CINTlrys_schmidt(int nroots, double x, double lower, double *roots, double *
         return 0;
 }
 
-#ifdef HAVE_QUADMATH_H
+#ifdef HAVE_FLOAT128_QC
 static int R_qsmit(__float128 *cs, __float128 *fmt_ints, int n)
 {
         int i, j, k;

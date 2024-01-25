@@ -10,6 +10,9 @@
 
 #ifdef HAVE_QUADMATH_H
 #include <quadmath.h>
+#endif
+
+#ifdef HAVE_FLOAT128_QC
 #define SQRTPIE4q     .8862269254527580136490837416705725913987747280611935641069038949264q
 #define SML_FLOAT128  1.0e-35
 #endif
@@ -414,7 +417,7 @@ void fmt1_lerfc_like(long double *f, long double t, long double lower, int m)
         }
 }
 
-#ifdef HAVE_QUADMATH_H
+#ifdef HAVE_FLOAT128_QC
 static void fmt1_qgamma_inc_like(__float128 *f, __float128 t, int m)
 {
         __float128 b = m + .5q;
