@@ -12,10 +12,15 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
   set(CMAKE_BUILD_TYPE RELWITHDEBINFO)
 endif()
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-option(BUILD_MARCH_NATIVE "gcc flag -march=native" on)
+option(BUILD_MARCH_NATIVE "gcc flag -march=native" off)
+option(BUILD_CUSTOM_MARCH "custom march flag" off)
+
 if(BUILD_MARCH_NATIVE)
   message("Build with -march=native")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -O2")
+elseif(BUILD_CUSTOM_MARCH)
+  message("Build with -march=${QC_CUSTOM_MARCH_FLAG}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${QC_CUSTOM_MARCH_FLAG} -O2"
 else()
   # This appears to be the lowest version that compiles
   message("Build with -march=sse3")
