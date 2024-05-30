@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.5)
 project (qcint C)
 set(qcint_VERSION_MAJOR "6")
 set(qcint_VERSION_MINOR "1")
-set(qcint_VERSION_PATCH "0")
+set(qcint_VERSION_PATCH "2")
 set(qcint_VERSION_TWEAK "0")
 set(qcint_VERSION "${qcint_VERSION_MAJOR}.${qcint_VERSION_MINOR}.${qcint_VERSION_PATCH}")
 set(cint_SOVERSION "${qcint_VERSION_MAJOR}")
@@ -155,6 +155,7 @@ endif()
 
 add_library(cint ${cintSrc})
 set_target_properties(cint PROPERTIES
+  C_STANDARD 99
   VERSION ${qcint_VERSION}
   SOVERSION ${cint_SOVERSION}
   LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
