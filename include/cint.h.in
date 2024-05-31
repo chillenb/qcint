@@ -145,27 +145,54 @@
 #define bas(SLOT,I)     bas[BAS_SLOTS * (I) + (SLOT)]
 #define atm(SLOT,I)     atm[ATM_SLOTS * (I) + (SLOT)]
 
-#include <immintrin.h>
 #include <mm_malloc.h>
 
+#cmakedefine QCINT_V_AVX512
+#cmakedefine QCINT_V_AVX
+#cmakedefine QCINT_V_SSE3
+#cmakedefine QCINT_V_ARM_NEON
+
+#if defined QCINT_V_AVX512
+
+#include <immintrin.h>
 #ifdef __AVX512F__
 #define SIMDD   8
-#elif __AVX__
-#define SIMDD   4
-#elif __SSE3__
-#define SIMDD   2
+#else
+#error "AVX512 is requested but not enabled."
 #endif
 
-#if defined(__GNUC__)
+#elif defined QCINT_V_AVX
+
+#include <immintrin.h>
+#ifdef __AVX__
+#define SIMDD   4
+#else
+#error "AVX is requested but not enabled."
+#endif
+
+#elif defined QCINT_V_SSE3
+
+#include <immintrin.h>
+
+#ifdef __SSE3__
+#define SIMDD   2
+#else
+#error "SSE3 is requested but not enabled."
+#endif
+
+#elif defined QCINT_V_ARM_NEON
+
+#include <arm_neon.h>
+
+#endif
+
 #define ALIGN16 __attribute__((aligned(16)))
 #define ALIGN32 __attribute__((aligned(32)))
 #define ALIGNMM __attribute__((aligned(SIMDD*8)))
 #define RESTRICT __restrict__
-#else
-#define ALIGN16
-#define ALIGN32
-#define ALIGNMM
-#define RESTRICT
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 #ifndef HAVE_DEFINED_CINTOPT_H
@@ -324,4 +351,9 @@ void CINTc2s_ket_spinor_si1(double complex *gspa, double complex *gspb, double *
                             int lds, int ldc, int nctr, int l, int kappa);
 void CINTc2s_iket_spinor_si1(double complex *gspa, double complex *gspb, double *gcart,
                              int lds, int ldc, int nctr, int l, int kappa);
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
