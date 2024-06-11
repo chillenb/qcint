@@ -140,7 +140,7 @@ if(ENABLE_STATIC)
 endif()
 
 add_library(qcint ${cintSrc})
-set_target_properties(cint PROPERTIES
+set_target_properties(qcint PROPERTIES
   C_STANDARD 99
   VERSION ${qcint_VERSION}
   SOVERSION ${qcint_SOVERSION}
