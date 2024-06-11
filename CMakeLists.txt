@@ -5,7 +5,7 @@ set(qcint_VERSION_MINOR "1")
 set(qcint_VERSION_PATCH "2")
 set(qcint_VERSION_TWEAK "0")
 set(qcint_VERSION "${qcint_VERSION_MAJOR}.${qcint_VERSION_MINOR}.${qcint_VERSION_PATCH}")
-set(cint_SOVERSION "${qcint_VERSION_MAJOR}")
+set(qcint_SOVERSION "${qcint_VERSION_MAJOR}")
 
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O2 -DNDEBUG")
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -15,12 +15,9 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 option(BUILD_MARCH_NATIVE "gcc flag -march=native" on)
 if(BUILD_MARCH_NATIVE)
   message("Build with -march=native")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -O2")
-else()
-  # This appears to be the lowest version that compiles
-  message("Build with -march=sse3")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse3 -O2")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native")
 endif()
+
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -unroll-aggressive -ipo ")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-math-errno")
@@ -142,20 +139,20 @@ if(ENABLE_STATIC)
   set(BUILD_SHARED_LIBS 0)
 endif()
 
-add_library(cint ${cintSrc})
+add_library(qcint ${cintSrc})
 set_target_properties(cint PROPERTIES
   C_STANDARD 99
   VERSION ${qcint_VERSION}
-  SOVERSION ${cint_SOVERSION}
+  SOVERSION ${qcint_SOVERSION}
   LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 if(QUADMATH_FOUND)
-  target_link_libraries(cint quadmath)
+  target_link_libraries(qcint quadmath)
 endif()
-target_link_libraries(cint "-lm")
+target_link_libraries(qcint "-lm")
 
 set(CintHeaders
   ${PROJECT_SOURCE_DIR}/include/cint_funcs.h
   ${PROJECT_BINARY_DIR}/include/cint.h)
 
-install(TARGETS cint DESTINATION "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}" COMPONENT "lib")
+install(TARGETS qcint DESTINATION "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}" COMPONENT "lib")
 install(FILES ${CintHeaders} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR} COMPONENT "dev")
