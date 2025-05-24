@@ -213,7 +213,7 @@ void CINTgout2e(double *gout, double *g, int *idx, CINTEnvVars *envs)
         }
 }
 
-#elif __AVX2__
+#elif defined(QCINT_HAS_AVX2)
 #define collect \
         MM_STORE(gc+2*SIMDD, r0); \
         MM_STORE(gc+3*SIMDD, r1); \

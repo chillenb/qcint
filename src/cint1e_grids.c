@@ -123,14 +123,14 @@ int CINT1e_grids_loop(double *gctr, CINTEnvVars *envs, double *cache)
 
 #if (SIMDD == 8)
         __m256i vindex = _mm256_set_epi32(21, 18, 15, 12, 9, 6, 3, 0);
-#elif __AVX2__
+#elif defined(QCINT_HAS_AVX2)
         __m128i vindex = _mm_set_epi32(9, 6, 3, 0);
 #endif
         for (grids_offset = 0; grids_offset < ngrids; grids_offset += GRID_BLKSIZE) {
                 envs->grids_offset = grids_offset;
                 bgrids = MIN(ngrids - grids_offset, GRID_BLKSIZE);
                 bgrids = ALIGN_UP(bgrids, SIMDD);
-#if (SIMDD == 8) || __AVX2__
+#if (SIMDD == 8) || defined(QCINT_HAS_AVX2)
                 for (i = 0; i < bgrids; i += SIMDD) {
                         MM_STORE(gridsT+i+GRID_BLKSIZE*0, MM_GATHER(grids+(grids_offset+i)*3+0, vindex, 8));
                         MM_STORE(gridsT+i+GRID_BLKSIZE*1, MM_GATHER(grids+(grids_offset+i)*3+1, vindex, 8));

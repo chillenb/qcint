@@ -23,6 +23,7 @@
 
 macro(check_native_vectorization)
   # Check for native vectorization
+  # Respects march flags in CMAKE_C_FLAGS.
   include(CheckCSourceRuns)
   check_c_source_runs("
   #include <immintrin.h>
@@ -40,7 +41,7 @@ macro(check_native_vectorization)
     }
     return 0;
   }"
-  SSE3_WORKS)
+  QCINT_HAS_SSE3)
 
     check_c_source_runs("
     #include <immintrin.h>
@@ -60,7 +61,7 @@ macro(check_native_vectorization)
         }
         return 0;
     }"
-    AVX_WORKS)
+    QCINT_HAS_AVX)
 
     check_c_source_runs("
     #include <immintrin.h>
@@ -80,7 +81,28 @@ macro(check_native_vectorization)
       }
       return 0;
     }"
-    AVX2_WORKS)
+    QCINT_HAS_AVX2)
+
+    check_c_source_runs("
+    #include <immintrin.h>
+    int main()
+    {
+        volatile __m256 a, b, c;
+        const float src[8] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f };
+        float dst[8];
+        a = _mm256_loadu_ps( src );
+        b = _mm256_loadu_ps( src );
+        c = _mm256_loadu_ps( src );
+        c = _mm256_fmadd_ps(a, b, c);
+        _mm256_storeu_ps( dst, c );
+        for( int i = 0; i < 8; i++ ){
+            if( ( src[i] * src[i] + src[i] ) != dst[i] ){
+                return -1;
+            }
+        }
+        return 0;
+    }"
+    QCINT_HAS_FMA)
 
     check_c_source_runs("
         #include <immintrin.h>
@@ -100,5 +122,5 @@ macro(check_native_vectorization)
             }
             return 0;
         }"
-    AVX512F_WORKS)
+    QCINT_HAS_AVX512F)
 endmacro()

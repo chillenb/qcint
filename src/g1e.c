@@ -1020,7 +1020,7 @@ void CINTsort_gout(double *sout, double *gout, int nf, int count)
         }
 
         int i = 0;
-#if __AVX2__
+#if defined(QCINT_HAS_AVX2)
 #if (SIMDD == 8)
         __m256i vindex = _mm256_set_epi32(7*SIMDD, 6*SIMDD, 5*SIMDD, 4*SIMDD,
                                           3*SIMDD, 2*SIMDD, 1*SIMDD, 0);
@@ -1136,7 +1136,7 @@ void CINTsort_gout(double *sout, double *gout, int nf, int count)
 #endif
         }
 
-#else // AVX or SSE3
+#else // no AVX2, only AVX or SSE3
         switch (count) {
         case 1:
                 for (i = 0; i < nf; i++) {

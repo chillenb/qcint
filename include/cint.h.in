@@ -148,6 +148,12 @@
 #include <immintrin.h>
 #include <mm_malloc.h>
 
+#cmakedefine QCINT_HAS_AVX512F
+#cmakedefine QCINT_HAS_AVX2
+#cmakedefine QCINT_HAS_FMA
+#cmakedefine QCINT_HAS_AVX
+#cmakedefine QCINT_HAS_SSE3
+
 #cmakedefine QCINT_SIMDD @QCINT_SIMDD@
 #ifdef QCINT_SIMDD
 #define SIMDD QCINT_SIMDD
