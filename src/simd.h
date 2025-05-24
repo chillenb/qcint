@@ -26,7 +26,7 @@
 #include <mm_malloc.h>
 #include "cint.h"
 
-#ifdef __AVX512F__
+#if SIMDD == 8
 #define __MD            __m512d
 #define MM_LOAD         _mm512_load_pd
 #define MM_LOADU        _mm512_loadu_pd
@@ -46,7 +46,7 @@
 #define MM_EXPN(y,x,rx) y[0] = exp(-x[0]); y[1] = exp(-x[1]); y[2] = exp(-x[2]); y[3] = exp(-x[3]); \
                         y[4] = exp(-x[4]); y[5] = exp(-x[5]); y[6] = exp(-x[6]); y[7] = exp(-x[7])
 
-#elif __AVX__
+#elif SIMDD == 4
 #define __MD            __m256d
 #define MM_LOAD         _mm256_load_pd
 #define MM_LOADU        _mm256_loadu_pd
@@ -69,7 +69,7 @@
 #define MM_CMP(a,b,c)   _mm256_movemask_pd(_mm256_cmp_pd(a,b,c))
 #define MM_EXPN(y,x,rx) y[0] = exp(-x[0]); y[1] = exp(-x[1]); y[2] = exp(-x[2]); y[3] = exp(-x[3])
 
-#elif __SSE3__
+#elif SIMDD == 2
 #define __MD            __m128d
 #define MM_LOAD         _mm_load_pd
 #define MM_LOADU        _mm_loadu_pd
