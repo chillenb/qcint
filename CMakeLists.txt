@@ -162,6 +162,7 @@ add_library(cint ${cintSrc})
 target_include_directories(cint
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   PRIVATE
   ${PROJECT_BINARY_DIR}/src
